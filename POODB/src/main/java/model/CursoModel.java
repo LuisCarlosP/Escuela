@@ -1,16 +1,23 @@
 package model;
 
 public class CursoModel {
-
     private int id;
     private String nombre;
+    private String descripcion;
+    private String estado;
 
-    private int estado;
+    public CursoModel() {}
 
-
-
-    public CursoModel(String nombre, int estado) {
+    public CursoModel(int id, String nombre, String descripcion, String estado) {
+        this.id = id;
         this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.estado = estado;
+    }
+
+    public CursoModel(String nombre, String descripcion, String estado) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
         this.estado = estado;
     }
 
@@ -30,21 +37,29 @@ public class CursoModel {
         this.nombre = nombre;
     }
 
-    public int getEstado() {
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(int estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "CursoModel{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 }
-
-
-
-/*
-DELETE FROM `curso` WHERE 0
-UPDATE `curso` SET `id`='[value-1]',`nombre`='[value-2]',`estado`='[value-3]' WHERE 1
-INSERT INTO `curso`(`id`, `nombre`, `estado`) VALUES ('[value-1]','[value-2]','[value-3]')
-SELECT `id`, `nombre`, `estado` FROM `curso` WHERE 1
-
-*/

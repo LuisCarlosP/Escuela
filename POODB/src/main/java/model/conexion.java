@@ -17,6 +17,8 @@ public class conexion {
             System.out.println("Conexion establecida");
         }catch (SQLException e){
             System.err.println("No hubo conexion" + e.getMessage());
+        }catch (Exception e){
+            System.err.println("No hubo conexion" + e.getMessage());
         }
 
         return connection;
