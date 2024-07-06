@@ -7,9 +7,9 @@ import view.ConsoleView;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class ProfesorController {
+
     private ConsoleView consoleView;
     private ProfesorDAO profesorDAO;
 
@@ -19,44 +19,55 @@ public class ProfesorController {
         this.profesorDAO = new ProfesorDAO(connection);
     }
 
-    public void agregarProfesor(String nombre, String identificacion, String email, String departamento, String estado) {
+    public ProfesorModel agregarProfesor(String nombre, String identificacion, String email, String departamento, String estado) {
         ProfesorModel profesor = new ProfesorModel(nombre, identificacion, email, departamento, estado);
 
         try {
             profesorDAO.insert(profesor);
             consoleView.showMessage("Profesor insertado con ID: " + profesor.getId());
+            return profesor;
         } catch (SQLException e) {
             consoleView.errorMessage("Error al insertar profesor: " + e.getMessage());
+            return null;
         }
     }
 
-    public void modificarProfesor(int id, String nombre, String identificacion, String email, String departamento, String estado) {
+    public boolean modificarProfesor(int id, String nombre, String identificacion, String email, String departamento, String estado) {
         ProfesorModel profesor = new ProfesorModel(nombre, identificacion, email, departamento, estado);
         profesor.setId(id);
 
         try {
             profesorDAO.update(profesor);
             consoleView.showMessage("Profesor modificado");
+            return true;
         } catch (SQLException e) {
             consoleView.errorMessage("Error al modificar profesor: " + e.getMessage());
+            return false;
         }
     }
 
-    public void eliminarProfesor(int id) {
+    public boolean eliminarProfesor(int id) {
+        ProfesorModel profesor = null;
         try {
-            if (profesorDAO.delete(id)) {
+            profesor = profesorDAO.select(id);
+            if (profesor != null) {
+                profesorDAO.delete(id);
                 consoleView.showMessage("Profesor eliminado");
+                return true;
             } else {
                 consoleView.errorMessage("Profesor no encontrado");
+                return false;
             }
         } catch (SQLException e) {
             consoleView.errorMessage("Error al eliminar profesor: " + e.getMessage());
+            return false;
         }
     }
 
-    public void consultarProfesor(int id) {
+    public ProfesorModel consultarProfesor(int id) {
+        ProfesorModel profesor = null;
         try {
-            ProfesorModel profesor = profesorDAO.select(id);
+            profesor = profesorDAO.select(id);
             if (profesor != null) {
                 consoleView.consultarProfesor(profesor);
             } else {
@@ -65,5 +76,6 @@ public class ProfesorController {
         } catch (SQLException e) {
             consoleView.errorMessage("Error al consultar profesor: " + e.getMessage());
         }
+        return profesor;
     }
 }

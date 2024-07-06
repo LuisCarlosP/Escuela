@@ -6,6 +6,7 @@ import controller.GrupoController;
 import controller.ProfesorController;
 import view.ConsoleView;
 import view.EstudianteView;
+import view.ProfesorView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +30,8 @@ public class Main extends JFrame {
 
     private Dimension estudianteViewSize;
     private Point estudianteViewLocation;
+    private Dimension profesorViewSize;
+    private Point profesorViewLocation;
 
     public Main() {
         setTitle("Gestión de Academia");
@@ -37,19 +40,33 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         gestionEstudianteButton.addActionListener(e -> mostrarVistaEstudiante());
+        gestionProfesorButton.addActionListener(e -> mostrarVistaProfesor());
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
                 if (estudianteViewSize != null) {
                     estudianteViewSize = getSize();
-                }else {
+                } else {
                     estudianteViewSize = new Dimension(800, 600);
                 }
+
+                if (profesorViewSize != null) {
+                    profesorViewSize = getSize();
+                } else {
+                    profesorViewSize = new Dimension(800, 600);
+                }
+
                 if (estudianteViewLocation != null) {
                     estudianteViewLocation = getLocation();
-                }else{
+                } else {
                     estudianteViewLocation = new Point(0, 0);
+                }
+
+                if (profesorViewLocation != null) {
+                    profesorViewLocation = getLocation();
+                } else {
+                    profesorViewLocation = new Point(0, 0);
                 }
             }
 
@@ -57,6 +74,10 @@ public class Main extends JFrame {
             public void componentMoved(ComponentEvent e) {
                 if (estudianteViewLocation != null) {
                     estudianteViewLocation = getLocation();
+                }
+
+                if (profesorViewLocation != null) {
+                    profesorViewLocation = getLocation();
                 }
             }
         });
@@ -89,7 +110,33 @@ public class Main extends JFrame {
             }
         });
     }
+    private void mostrarVistaProfesor() {
+        JFrame profesorFrame = new JFrame("Gestión de Profesores");
+        ProfesorView profesorView = new ProfesorView(profesorController, this);
+        profesorFrame.setContentPane(profesorView);
+        profesorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        profesorFrame.setVisible(true);
+        this.setVisible(false);
+        profesorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        profesorFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                if (profesorViewSize != null && profesorViewLocation != null) {
+                    profesorFrame.setSize(profesorViewSize);
+                    profesorFrame.setLocation(profesorViewLocation);
+                }
+            }
 
+            @Override
+            public void windowClosed(WindowEvent e) {
+                profesorViewLocation = profesorFrame.getLocation();
+                profesorViewSize = profesorFrame.getSize();
+                Main.this.setLocation(profesorViewLocation);
+                Main.this.setSize(profesorViewSize);
+                Main.this.setVisible(true);
+            }
+        });
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main mainFrame = new Main();

@@ -144,6 +144,4 @@ public class ConsoleView {
         return null;
     }
 
-    public void eliminarEstudiante(EstudianteModel estudiante) {
-    }
 }

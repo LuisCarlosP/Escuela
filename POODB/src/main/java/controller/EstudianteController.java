@@ -53,7 +53,6 @@ public class EstudianteController {
             estudiante = estudianteDAO.select(id);
             if (estudiante != null) {
                 estudianteDAO.delete(id);
-                consoleView.eliminarEstudiante(estudiante);
                 return true;
             } else {
                 consoleView.errorMessage("Estudiante no encontrado");
