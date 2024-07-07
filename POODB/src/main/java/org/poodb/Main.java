@@ -4,10 +4,7 @@ import controller.CursoController;
 import controller.EstudianteController;
 import controller.GrupoController;
 import controller.ProfesorController;
-import view.ConsoleView;
-import view.CursoView;
-import view.EstudianteView;
-import view.ProfesorView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,12 +26,8 @@ public class Main extends JFrame {
     CursoController cursoController = new CursoController(consoleView);
     GrupoController grupoController = new GrupoController(consoleView);
 
-    private Dimension estudianteViewSize;
-    private Point estudianteViewLocation;
-    private Dimension profesorViewSize;
-    private Point profesorViewLocation;
-    private Dimension cursoViewSize;
-    private Point cursoViewLocation;
+    private Dimension sharedViewSize;
+    private Point sharedViewLocation;
 
     public Main() {
         setTitle("Gestión de Academia");
@@ -45,61 +38,20 @@ public class Main extends JFrame {
         gestionEstudianteButton.addActionListener(e -> mostrarVistaEstudiante());
         gestionProfesorButton.addActionListener(e -> mostrarVistaProfesor());
         gestionCursoButton.addActionListener(e -> mostrarVistaCurso());
+        gestionGrupoButton.addActionListener(e -> mostrarVistaGrupo());
 
+        sharedViewSize = getSize();
+        sharedViewLocation = getLocation();
 
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent componentEvent) {
-                if (estudianteViewSize != null) {
-                    estudianteViewSize = getSize();
-                } else {
-                    estudianteViewSize = new Dimension(800, 600);
-                }
-
-                if (profesorViewSize != null) {
-                    profesorViewSize = getSize();
-                } else {
-                    profesorViewSize = new Dimension(800, 600);
-                }
-
-                if (cursoViewSize != null) {
-                    cursoViewSize = getSize();
-                } else {
-                    cursoViewSize = new Dimension(800, 600);
-                }
-
-                if (estudianteViewLocation != null) {
-                    estudianteViewLocation = getLocation();
-                } else {
-                    estudianteViewLocation = new Point(0, 0);
-                }
-
-                if (profesorViewLocation != null) {
-                    profesorViewLocation = getLocation();
-                } else {
-                    profesorViewLocation = new Point(0, 0);
-                }
-
-                if (cursoViewLocation != null) {
-                    cursoViewLocation = getLocation();
-                } else {
-                    cursoViewLocation = new Point(0, 0);
-                }
+                sharedViewSize = getSize();
             }
 
             @Override
             public void componentMoved(ComponentEvent e) {
-                if (estudianteViewLocation != null) {
-                    estudianteViewLocation = getLocation();
-                }
-
-                if (profesorViewLocation != null) {
-                    profesorViewLocation = getLocation();
-                }
-
-                if (cursoViewLocation != null) {
-                    cursoViewLocation = getLocation();
-                }
+                sharedViewLocation = getLocation();
             }
         });
     }
@@ -109,82 +61,85 @@ public class Main extends JFrame {
         EstudianteView estudianteView = new EstudianteView(estudianteController, this);
         estudianteFrame.setContentPane(estudianteView);
         estudianteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        estudianteFrame.setSize(sharedViewSize);
+        estudianteFrame.setLocation(sharedViewLocation);
         estudianteFrame.setVisible(true);
         this.setVisible(false);
-        estudianteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         estudianteFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent e) {
-                if (estudianteViewSize != null && estudianteViewLocation != null) {
-                    estudianteFrame.setSize(estudianteViewSize);
-                    estudianteFrame.setLocation(estudianteViewLocation);
-                }
-            }
-
-            @Override
             public void windowClosed(WindowEvent e) {
-                estudianteViewLocation = estudianteFrame.getLocation();
-                estudianteViewSize = estudianteFrame.getSize();
-                Main.this.setLocation(estudianteViewLocation);
-                Main.this.setSize(estudianteViewSize);
+                sharedViewLocation = estudianteFrame.getLocation();
+                sharedViewSize = estudianteFrame.getSize();
+                Main.this.setLocation(sharedViewLocation);
+                Main.this.setSize(sharedViewSize);
                 Main.this.setVisible(true);
             }
         });
     }
+
     private void mostrarVistaProfesor() {
         JFrame profesorFrame = new JFrame("Gestión de Profesores");
         ProfesorView profesorView = new ProfesorView(profesorController, this);
         profesorFrame.setContentPane(profesorView);
         profesorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        profesorFrame.setSize(sharedViewSize);
+        profesorFrame.setLocation(sharedViewLocation);
         profesorFrame.setVisible(true);
         this.setVisible(false);
-        profesorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         profesorFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent e) {
-                if (profesorViewSize != null && profesorViewLocation != null) {
-                    profesorFrame.setSize(profesorViewSize);
-                    profesorFrame.setLocation(profesorViewLocation);
-                }
-            }
-
-            @Override
             public void windowClosed(WindowEvent e) {
-                profesorViewLocation = profesorFrame.getLocation();
-                profesorViewSize = profesorFrame.getSize();
-                Main.this.setLocation(profesorViewLocation);
-                Main.this.setSize(profesorViewSize);
+                sharedViewLocation = profesorFrame.getLocation();
+                sharedViewSize = profesorFrame.getSize();
+                Main.this.setLocation(sharedViewLocation);
+                Main.this.setSize(sharedViewSize);
                 Main.this.setVisible(true);
             }
         });
     }
+
     private void mostrarVistaCurso() {
         JFrame cursoFrame = new JFrame("Gestión de Cursos");
         CursoView cursoView = new CursoView(cursoController, this);
         cursoFrame.setContentPane(cursoView);
         cursoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        cursoFrame.setSize(sharedViewSize);
+        cursoFrame.setLocation(sharedViewLocation);
         cursoFrame.setVisible(true);
         this.setVisible(false);
-        cursoFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cursoFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent e) {
-                if (cursoViewSize != null && cursoViewLocation != null) {
-                    cursoFrame.setSize(cursoViewSize);
-                    cursoFrame.setLocation(cursoViewLocation);
-                }
-            }
-
-            @Override
             public void windowClosed(WindowEvent e) {
-                cursoViewLocation = cursoFrame.getLocation();
-                cursoViewSize = cursoFrame.getSize();
-                Main.this.setLocation(cursoViewLocation);
-                Main.this.setSize(cursoViewSize);
+                sharedViewLocation = cursoFrame.getLocation();
+                sharedViewSize = cursoFrame.getSize();
+                Main.this.setLocation(sharedViewLocation);
+                Main.this.setSize(sharedViewSize);
                 Main.this.setVisible(true);
             }
         });
     }
+
+    private void mostrarVistaGrupo() {
+        JFrame grupoFrame = new JFrame("Gestión de Grupos");
+        GrupoView grupoView = new GrupoView(grupoController, this);
+        grupoFrame.setContentPane(grupoView);
+        grupoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        grupoFrame.setSize(sharedViewSize);
+        grupoFrame.setLocation(sharedViewLocation);
+        grupoFrame.setVisible(true);
+        this.setVisible(false);
+        grupoFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                sharedViewLocation = grupoFrame.getLocation();
+                sharedViewSize = grupoFrame.getSize();
+                Main.this.setLocation(sharedViewLocation);
+                Main.this.setSize(sharedViewSize);
+                Main.this.setVisible(true);
+            }
+        });
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main mainFrame = new Main();
