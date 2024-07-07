@@ -19,44 +19,52 @@ public class CursoController {
         this.cursoDAO = new CursoDAO(connection);
     }
 
-    public void agregarCurso(String nombre, String descripcion, String estado) {
+    public CursoModel agregarCurso(String nombre, String descripcion, String estado) {
         CursoModel curso = new CursoModel(nombre, descripcion, estado);
 
         try {
             cursoDAO.insert(curso);
             consoleView.showMessage("Curso insertado con ID: " + curso.getId());
+            return curso;
         } catch (SQLException e) {
             consoleView.errorMessage("Error al insertar curso: " + e.getMessage());
+            return null;
         }
     }
 
-    public void modificarCurso(int id, String nombre, String descripcion, String estado) {
+    public boolean modificarCurso(int id, String nombre, String descripcion, String estado) {
         CursoModel curso = new CursoModel(nombre, descripcion, estado);
         curso.setId(id);
 
         try {
             cursoDAO.update(curso);
             consoleView.showMessage("Curso modificado");
+            return true;
         } catch (SQLException e) {
             consoleView.errorMessage("Error al modificar curso: " + e.getMessage());
+            return false;
         }
     }
 
-    public void eliminarCurso(int id) {
+    public boolean eliminarCurso(int id) {
         try {
             if (cursoDAO.delete(id)) {
                 consoleView.showMessage("Curso eliminado");
+                return true;
             } else {
                 consoleView.errorMessage("Curso no encontrado");
+                return false;
             }
         } catch (SQLException e) {
             consoleView.errorMessage("Error al eliminar curso: " + e.getMessage());
+            return false;
         }
     }
 
-    public void consultarCurso(int id) {
+    public CursoModel consultarCurso(int id) {
+        CursoModel curso = null;
         try {
-            CursoModel curso = cursoDAO.select(id);
+            curso = cursoDAO.select(id);
             if (curso != null) {
                 consoleView.consultarCurso(curso);
             } else {
@@ -65,5 +73,6 @@ public class CursoController {
         } catch (SQLException e) {
             consoleView.errorMessage("Error al consultar curso: " + e.getMessage());
         }
+        return curso;
     }
 }
