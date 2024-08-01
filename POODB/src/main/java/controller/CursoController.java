@@ -19,6 +19,11 @@ public class CursoController {
         this.cursoDAO = new CursoDAO(connection);
     }
 
+    public CursoController(ConsoleView consoleView, CursoDAO cursoDAO) {
+        this.consoleView = consoleView;
+        this.cursoDAO = cursoDAO;
+    }
+
     public CursoModel agregarCurso(String nombre, String descripcion, String estado) {
         CursoModel curso = new CursoModel(nombre, descripcion, estado);
 

@@ -19,6 +19,11 @@ public class ProfesorController {
         this.profesorDAO = new ProfesorDAO(connection);
     }
 
+    public ProfesorController(ConsoleView consoleView, ProfesorDAO profesorDAO) {
+        this.consoleView = consoleView;
+        this.profesorDAO = profesorDAO;
+    }
+
     public ProfesorModel agregarProfesor(String nombre, String identificacion, String email, String departamento, String estado) {
         ProfesorModel profesor = new ProfesorModel(nombre, identificacion, email, departamento, estado);
 
@@ -47,11 +52,8 @@ public class ProfesorController {
     }
 
     public boolean eliminarProfesor(int id) {
-        ProfesorModel profesor = null;
         try {
-            profesor = profesorDAO.select(id);
-            if (profesor != null) {
-                profesorDAO.delete(id);
+            if (profesorDAO.delete(id)) {
                 consoleView.showMessage("Profesor eliminado");
                 return true;
             } else {

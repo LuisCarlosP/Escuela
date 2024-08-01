@@ -60,7 +60,7 @@ public class Main extends JFrame {
         JFrame estudianteFrame = new JFrame("Gestión de Estudiantes");
         EstudianteView estudianteView = new EstudianteView(estudianteController, this);
         estudianteFrame.setContentPane(estudianteView);
-        estudianteFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         estudianteFrame.setSize(sharedViewSize);
         estudianteFrame.setLocation(sharedViewLocation);
         estudianteFrame.setVisible(true);
@@ -81,7 +81,7 @@ public class Main extends JFrame {
         JFrame profesorFrame = new JFrame("Gestión de Profesores");
         ProfesorView profesorView = new ProfesorView(profesorController, this);
         profesorFrame.setContentPane(profesorView);
-        profesorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         profesorFrame.setSize(sharedViewSize);
         profesorFrame.setLocation(sharedViewLocation);
         profesorFrame.setVisible(true);
@@ -102,7 +102,7 @@ public class Main extends JFrame {
         JFrame cursoFrame = new JFrame("Gestión de Cursos");
         CursoView cursoView = new CursoView(cursoController, this);
         cursoFrame.setContentPane(cursoView);
-        cursoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cursoFrame.setSize(sharedViewSize);
         cursoFrame.setLocation(sharedViewLocation);
         cursoFrame.setVisible(true);
@@ -123,7 +123,7 @@ public class Main extends JFrame {
         JFrame grupoFrame = new JFrame("Gestión de Grupos");
         GrupoView grupoView = new GrupoView(grupoController, this);
         grupoFrame.setContentPane(grupoView);
-        grupoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         grupoFrame.setSize(sharedViewSize);
         grupoFrame.setLocation(sharedViewLocation);
         grupoFrame.setVisible(true);

@@ -19,6 +19,10 @@ public class EstudianteController {
         Connection connection = conexion.getConnection();
         this.estudianteDAO = new EstudianteDAO(connection);
     }
+    public EstudianteController(ConsoleView consoleView, EstudianteDAO estudianteDAO) {
+        this.consoleView = consoleView;
+        this.estudianteDAO = estudianteDAO;
+    }
 
     public EstudianteModel agregarEstudiante(String nombre, String identificacion, String email, Date fechaNacimiento, String estado) {
         EstudianteModel estudiante = new EstudianteModel(nombre, identificacion, email, fechaNacimiento, estado);
@@ -48,11 +52,9 @@ public class EstudianteController {
     }
 
     public boolean eliminarEstudiante(int id) {
-        EstudianteModel estudiante = null;
         try {
-            estudiante = estudianteDAO.select(id);
-            if (estudiante != null) {
-                estudianteDAO.delete(id);
+            if (estudianteDAO.delete(id)) {
+                consoleView.showMessage("Estudiante eliminado");
                 return true;
             } else {
                 consoleView.errorMessage("Estudiante no encontrado");

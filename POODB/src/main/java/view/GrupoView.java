@@ -22,30 +22,67 @@ public class GrupoView extends JPanel {
         this.mainFrame = mainFrame;
         setLayout(new BorderLayout());
 
+        Font font = new Font("Arial", Font.BOLD, 14);
+        Color color = new Color(51, 51, 51);
+
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2));
+        inputPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        inputPanel.add(new JLabel("ID:"));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JLabel idLabel = new JLabel("ID:");
+        idLabel.setFont(font);
+        idLabel.setForeground(color);
+        inputPanel.add(idLabel, gbc);
+
+        gbc.gridx = 1;
         idField = new JTextField();
-        inputPanel.add(idField);
+        idField.setFont(font);
+        inputPanel.add(idField, gbc);
 
-        inputPanel.add(new JLabel("Nombre:"));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        JLabel nombreLabel = new JLabel("Nombre:");
+        nombreLabel.setFont(font);
+        nombreLabel.setForeground(color);
+        inputPanel.add(nombreLabel, gbc);
+
+        gbc.gridx = 1;
         nombreField = new JTextField();
-        inputPanel.add(nombreField);
+        nombreField.setFont(font);
+        inputPanel.add(nombreField, gbc);
 
-        inputPanel.add(new JLabel("Descripción:"));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        JLabel descripcionLabel = new JLabel("Descripción:");
+        descripcionLabel.setFont(font);
+        descripcionLabel.setForeground(color);
+        inputPanel.add(descripcionLabel, gbc);
+
+        gbc.gridx = 1;
         descripcionField = new JTextField();
-        inputPanel.add(descripcionField);
+        descripcionField.setFont(font);
+        inputPanel.add(descripcionField, gbc);
 
-        inputPanel.add(new JLabel("Estado:"));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        JLabel estadoLabel = new JLabel("Estado:");
+        estadoLabel.setFont(font);
+        estadoLabel.setForeground(color);
+        inputPanel.add(estadoLabel, gbc);
+
+        gbc.gridx = 1;
         estadoComboBox = new JComboBox<>(new String[]{"activo", "inactivo"});
-        inputPanel.add(estadoComboBox);
+        estadoComboBox.setFont(font);
+        inputPanel.add(estadoComboBox, gbc);
 
         add(inputPanel, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
@@ -54,55 +91,47 @@ public class GrupoView extends JPanel {
         gbc.insets = new Insets(5, 5, 5, 5);
 
         JButton agregarButton = new JButton("Agregar");
-        agregarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agregarGrupo();
-            }
-        });
+        agregarButton.setFont(font);
+        agregarButton.setForeground(Color.WHITE);
+        agregarButton.setBackground(color);
+        agregarButton.addActionListener(e -> agregarGrupo());
         buttonPanel.add(agregarButton, gbc);
 
         gbc.gridx = 1;
         JButton modificarButton = new JButton("Modificar");
-        modificarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modificarGrupo();
-            }
-        });
+        modificarButton.setFont(font);
+        modificarButton.setForeground(Color.WHITE);
+        modificarButton.setBackground(color);
+        modificarButton.addActionListener(e -> modificarGrupo());
         buttonPanel.add(modificarButton, gbc);
 
         gbc.gridx = 2;
         JButton eliminarButton = new JButton("Eliminar");
-        eliminarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarGrupo();
-            }
-        });
+        eliminarButton.setFont(font);
+        eliminarButton.setForeground(Color.WHITE);
+        eliminarButton.setBackground(color);
+        eliminarButton.addActionListener(e -> eliminarGrupo());
         buttonPanel.add(eliminarButton, gbc);
 
         gbc.gridx = 3;
         JButton consultarButton = new JButton("Consultar");
-        consultarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                consultarGrupo();
-            }
-        });
+        consultarButton.setFont(font);
+        consultarButton.setForeground(Color.WHITE);
+        consultarButton.setBackground(color);
+        consultarButton.addActionListener(e -> consultarGrupo());
         buttonPanel.add(consultarButton, gbc);
 
         add(buttonPanel, BorderLayout.CENTER);
 
         JPanel volverPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton volverButton = new JButton("Volver");
-        volverButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mainFrame.setVisible(true);
-                Window win = SwingUtilities.getWindowAncestor(GrupoView.this);
-                win.dispose();
-            }
+        volverButton.setFont(font);
+        volverButton.setForeground(Color.WHITE);
+        volverButton.setBackground(color);
+        volverButton.addActionListener(e -> {
+            mainFrame.setVisible(true);
+            Window win = SwingUtilities.getWindowAncestor(GrupoView.this);
+            win.dispose();
         });
         volverPanel.add(volverButton);
         add(volverPanel, BorderLayout.SOUTH);

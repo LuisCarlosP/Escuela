@@ -19,6 +19,10 @@ public class GrupoController {
         this.grupoDAO = new GrupoDAO(connection);
     }
 
+    public GrupoController(ConsoleView consoleView, GrupoDAO grupoDAO) {
+        this.consoleView = consoleView;
+        this.grupoDAO = grupoDAO;
+    }
     public GrupoModel agregarGrupo(String nombre, String descripcion, String estado) {
         GrupoModel grupo = new GrupoModel(nombre, descripcion, estado);
 
